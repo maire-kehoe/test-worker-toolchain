@@ -1,0 +1,34 @@
+version: '2'
+template:
+  name: "test worker toolchain"
+  description: "test toolchain referencing a private worker tool integration"
+  info:
+    git url: >
+      "[" + $env.repository + "]" +
+        "(" + $env.repository + ")"
+    git branch: >
+      "[" + $env.branch + "]" +
+        "(" + $env.repository +
+          "/tree/" + $env.branch + ")"
+toolchain:
+  name: 'test-worker-toolchain-{{timestamp}}'
+  template:
+    getting_started:
+      "Your toolchain is ready!"
+
+services: 
+  privateWorker:
+    service_id: private_worker
+    parameters:
+      name: "{{form.private_worker.parameters.name}}"
+      workerQueueCredentials: "{{form.private_worker.parameters.workerQueueCredentials}}"
+      # workerQueueIdentifier: "{{form.private_worker.parameters.workerQueueIdentifier}}"
+form:
+  private_worker:
+    parameters:
+      name: '{{privateWorkerName}}'
+      workerQueueCredentials: '{{privateWorkerCreds}}'
+      # this wont be needed once a fix is in place for https://github.ibm.com/org-ids/roadmap/issues/15360
+      # workerQueueIdentifier: "{{privateWorkerIdentifier}}"
+    # schema:
+    #   $ref: privateWorker.json
