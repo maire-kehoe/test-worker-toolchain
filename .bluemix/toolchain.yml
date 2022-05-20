@@ -17,12 +17,23 @@ toolchain:
       "Your toolchain is ready!"
 
 services: 
+
+  kp-vault:
+    service_id: keyprotect
+    parameters:
+      name: >
+        $env.kpName ? '{{kpName}}' : 'kp1'
+      region: "{{kpRegion}}"
+      resource-group: "{{kpResourceGroup}}"
+      instance-name: "{{kpInstanceName}}"
+
   privateWorker:
     service_id: private_worker
     parameters:
       name: "{{form.private_worker.parameters.name}}"
       workerQueueCredentials: "{{form.private_worker.parameters.workerQueueCredentials}}"
       # workerQueueIdentifier: "{{form.private_worker.parameters.workerQueueIdentifier}}"
+
 form:
   private_worker:
     parameters:
